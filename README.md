@@ -1,59 +1,93 @@
-# Creme
+# Creme 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.
+A modern web application for Cream Bakery, built with Angular (frontend) and Express with TypeScript (backend).
 
-## Development server
+## Project Overview
 
-To start a local development server, run:
+- **Project Name**: Creme
+- **Domain**: creme.ge
+- **Purpose**: Bakery website (currently static, database integration planned for future)
 
+## Tech Stack
+
+### Frontend
+- **Framework**: Angular 20.1.0
+- **Language**: TypeScript
+- **Styling**: SCSS
+- **Build Tool**: Angular CLI
+
+### Backend (Planned)
+- **Framework**: Express.js
+- **Language**: TypeScript
+- **Database**: None (static for now), PostgreSQL (future)
+
+### DevOps (Planned)
+- **CI/CD**: GitHub Actions
+- **Domain**: creme.ge
+
+## Project Structure
+
+```
+creme/
+├── src/                    # Angular frontend source
+│   ├── app/               # Application components
+│   ├── styles.scss        # Global styles
+│   └── main.ts           # Application entry point
+├── public/                # Static assets
+├── angular.json           # Angular configuration
+├── package.json           # Dependencies
+└── tsconfig.json          # TypeScript configuration
+```
+
+## Development Workflow
+
+### Current Status
+- ✅ Angular 20.1.0 project initialized
+- ⏳ Frontend structure (to be built)
+- ⏳ Backend API (to be built)
+- ⏳ CI/CD pipeline (to be built)
+
+### Development Rules
+1. **Small Scopes**: Each step should be small and focused
+2. **Code Review**: All code changes must be reviewed before implementation
+3. **Documentation**: README should be updated with each significant change
+4. **Step-by-Step**: Never implement large changes in one step
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
 ```bash
+npm install
+```
+
+### Development Server
+```bash
+npm start
+# or
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to `http://localhost:4200/`
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### Build
 ```bash
-ng generate component component-name
+npm run build
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Next Steps
 
-```bash
-ng generate --help
-```
+1. Set up basic Angular project structure
+2. Create initial components and routing
+3. Set up Express backend with TypeScript
+4. Configure GitHub Actions for CI/CD
+5. Prepare for PostgreSQL integration (future)
 
-## Building
+## Notes
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Design will be provided via Figma (pending)
+- Currently using static data (no database required)
+- All code changes should be reviewed and approved before implementation
