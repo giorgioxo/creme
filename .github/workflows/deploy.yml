@@ -2,11 +2,16 @@ name: Deploy to Production
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v1.0.0)'
+        required: true
+        type: string
   push:
     branches:
-      - main
+      - 'release/**'
     tags:
-      - 'v*'
+      - 'v*.*.*'
 
 jobs:
   deploy:
@@ -30,8 +35,20 @@ jobs:
       env:
         NODE_ENV: production
 
+    - name: Get version
+      id: version
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+        elif [[ "${{ github.ref_type }}" == "tag" ]]; then
+          echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+        else
+          echo "version=release-$(echo ${{ github.ref_name }} | sed 's/release\///')" >> $GITHUB_OUTPUT
+        fi
+
     - name: Deploy to creme.ge
       run: |
+        echo "Deploying version: ${{ steps.version.outputs.version }}"
         echo "Configure deployment to creme.ge domain"
         echo "Add your deployment commands here"
         # Example for different hosting providers:

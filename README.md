@@ -78,13 +78,49 @@ Navigate to `http://localhost:4200/`
 npm run build
 ```
 
-## Next Steps
+## Project Structure
 
-1. Set up basic Angular project structure
-2. Create initial components and routing
-3. Set up Express backend with TypeScript
-4. Configure GitHub Actions for CI/CD
-5. Prepare for PostgreSQL integration (future)
+```
+creme/
+├── src/                    # Angular frontend
+├── backend/                # Express + TypeScript API
+│   ├── src/
+│   ├── database/
+│   └── uploads/
+├── .github/workflows/      # CI/CD pipelines
+└── DEPLOYMENT.md          # Complete deployment guide
+```
+
+## Quick Start
+
+### Frontend (Angular)
+```bash
+npm install
+npm start
+# Open http://localhost:4200
+```
+
+### Backend (Express)
+```bash
+cd backend
+npm install
+cp env.example .env
+# Edit .env with your database credentials
+npm run dev
+# API runs on http://localhost:3000
+```
+
+## Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete step-by-step VPS deployment guide.
+
+## API Endpoints
+
+- `GET /api/health` - Health check
+- `GET /api/background-image` - Get background image URL
+- `POST /api/background-image` - Upload new background image
+
+See [backend/README.md](./backend/README.md) for API documentation.
 
 ## Notes
 
