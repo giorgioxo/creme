@@ -1,0 +1,15 @@
+📸 ADD IMAGE TO DATABASE
+
+You put: backend/uploads/cin.jpg
+
+Now add to database:
+
+Option 1: MySQL Command Line
+mysql -u creme_user -p creme_db
+INSERT INTO background_images (image_path) VALUES ('cin.jpg');
+EXIT;
+
+Option 2: Or use API to upload (automatic)
+
+Then restart backend and frontend will show the image!
+

@@ -1,9 +1,17 @@
-<div class="dashboard-container">
+<div 
+  class="dashboard-container"
+  [style.background-image]="backgroundImageUrl() ? 'url(' + backgroundImageUrl() + ')' : 'none'"
+  [style.background-size]="'cover'"
+  [style.background-position]="'center'"
+  [style.background-repeat]="'no-repeat'"
+>
   <div class="dashboard-content">
-    <img 
-      src="assets/images/creme-placeholder.jpg" 
-      alt="CRÈME - Coming Soon" 
-      class="placeholder-image"
-    />
+    @if (isLoading()) {
+      <div class="loading">Loading...</div>
+    } @else if (!backgroundImageUrl()) {
+      <div class="no-image">
+        <p>No background image set</p>
+      </div>
+    }
   </div>
 </div>
