@@ -5,7 +5,7 @@ Express + TypeScript backend for Creme Bakery website.
 ## Features
 
 - RESTful API for background image management
-- MySQL database integration
+- SQLite database (no setup required!)
 - Image upload with Multer
 - TypeScript for type safety
 
@@ -15,7 +15,7 @@ Express + TypeScript backend for Creme Bakery website.
 backend/
 ├── src/
 │   ├── config/
-│   │   └── database.ts      # MySQL connection pool
+│   │   └── database.ts      # SQLite database connection
 │   ├── controllers/
 │   │   └── image.controller.ts  # Image business logic
 │   ├── middleware/
@@ -24,7 +24,8 @@ backend/
 │   │   └── image.routes.ts      # API routes
 │   └── server.ts                # Express app entry
 ├── database/
-│   └── schema.sql               # MySQL schema
+│   └── schema.sql               # SQLite schema (reference)
+├── database.sqlite              # SQLite database file (auto-created)
 ├── uploads/                     # Uploaded images (gitignored)
 ├── .env.example                 # Environment template
 ├── package.json
@@ -38,23 +39,14 @@ backend/
 npm install
 ```
 
-### 2. Configure Environment
-```bash
-cp .env.example .env
-# Edit .env with your database credentials
-```
-
-### 3. Setup Database
-```bash
-mysql -u root -p < database/schema.sql
-```
-
-### 4. Run Development Server
+### 2. Run Development Server
 ```bash
 npm run dev
 ```
 
-### 5. Build for Production
+**That's it!** SQLite database will be created automatically at `backend/database.sqlite`.
+
+### 3. Build for Production
 ```bash
 npm run build
 npm start
@@ -106,13 +98,10 @@ Upload new background image.
 See `.env.example` for all required variables:
 
 - `PORT` - Server port (default: 3000)
-- `DB_HOST` - MySQL host
-- `DB_PORT` - MySQL port
-- `DB_USER` - MySQL username
-- `DB_PASSWORD` - MySQL password
-- `DB_NAME` - Database name
-- `UPLOAD_DIR` - Directory for uploaded files
-- `MAX_FILE_SIZE` - Max file size in bytes
+- `UPLOAD_DIR` - Directory for uploaded files (default: ./uploads)
+- `MAX_FILE_SIZE` - Max file size in bytes (default: 5242880)
+
+**Note:** SQLite doesn't require any database configuration - it works out of the box!
 
 ## Development
 

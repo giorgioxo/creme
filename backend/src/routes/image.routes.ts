@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getBackgroundImage, updateBackgroundImage } from '../controllers/image.controller';
+import { getComingSoonText } from '../controllers/content.controller';
 import { upload } from '../middleware/upload.middleware';
 
 export const imageRoutes = Router();
@@ -63,4 +64,23 @@ imageRoutes.get('/background-image', getBackgroundImage);
  *         description: No image file provided
  */
 imageRoutes.post('/background-image', upload.single('image'), updateBackgroundImage);
+
+/**
+ * @swagger
+ * /api/coming-soon:
+ *   get:
+ *     summary: Get coming soon text
+ *     tags: [Content]
+ *     responses:
+ *       200:
+ *         description: Coming soon text
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 text:
+ *                   type: string
+ */
+imageRoutes.get('/coming-soon', getComingSoonText);
 

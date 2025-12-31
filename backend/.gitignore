@@ -4,4 +4,7 @@ dist/
 uploads/
 *.log
 .DS_Store
+database.sqlite
+*.sqlite
+*.sqlite3
 

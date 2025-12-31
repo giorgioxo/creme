@@ -1,44 +1,47 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { BackgroundImageService } from './background-image.service';
+import { ContentService } from './content.service';
 
 @Component({
   selector: 'creme-dashboard',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss',
-  providers: [BackgroundImageService]
+  styleUrl: './dashboard.scss'
 })
 export class Dashboard implements OnInit {
-  backgroundImageUrl = signal<string | null>(null);
+  backgroundImageUrl = '/assets/images/cin.jpg';
+  comingSoonText = signal<string>('');
   isLoading = signal<boolean>(true);
 
-  constructor(private backgroundImageService: BackgroundImageService) {}
+  constructor(private contentService: ContentService) {}
 
   ngOnInit() {
-    this.loadBackgroundImage();
+    this.loadComingSoonText();
   }
 
-  loadBackgroundImage() {
+  loadComingSoonText() {
     this.isLoading.set(true);
-    this.backgroundImageService.getBackgroundImage().subscribe({
+    this.contentService.getComingSoonText().subscribe({
       next: (response) => {
-        if (response.imageUrl) {
-          // Convert relative URL to absolute
-          const fullUrl = response.imageUrl.startsWith('http') 
-            ? response.imageUrl 
-            : `http://localhost:3000${response.imageUrl}`;
-          this.backgroundImageUrl.set(fullUrl);
-        }
+        this.comingSoonText.set(response.text);
         this.isLoading.set(false);
       },
       error: (error) => {
-        console.error('Error loading background image:', error);
+        console.error('Error loading coming soon text:', error);
+        // Fallback text if API fails
+        this.comingSoonText.set('Crème - Coming Soon');
         this.isLoading.set(false);
       }
     });
   }
-}
 
+  // Split text into parts: "CREME" and "COMING SOON"
+  getTextParts(text: string): { creme: string; comingSoon: string } {
+    const parts = text.split(' - ');
+    return {
+      creme: parts[0] || 'CRÈME',
+      comingSoon: parts[1] || 'COMING SOON'
+    };
+  }
+}
