@@ -10,7 +10,8 @@ export interface ComingSoonResponse {
   providedIn: 'root'
 })
 export class ContentService {
-  private apiUrl = 'http://localhost:3000/api';
+  // Use environment variable or default to localhost for development
+  private apiUrl = (window as any).__API_URL__ || 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
@@ -21,4 +22,3 @@ export class ContentService {
     return this.http.get<ComingSoonResponse>(`${this.apiUrl}/coming-soon`);
   }
 }
-
