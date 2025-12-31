@@ -29,9 +29,12 @@ echo "✅ Backend build complete"
 echo ""
 
 # Copy frontend dist to backend (for serving)
-echo "[3/3] Copying frontend to backend..."
+echo "[3/3] Copying frontend to backend/dist..."
+if [ ! -d "backend/dist" ]; then
+    mkdir -p backend/dist
+fi
 cp -r dist/* backend/dist/ 2>/dev/null || true
-echo "✅ Files copied"
+echo "✅ Files copied to backend/dist"
 echo ""
 
 echo "===================================="

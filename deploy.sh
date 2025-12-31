@@ -121,7 +121,20 @@ fi
 print_info "პროექტის build-ი..."
 cd $PROJECT_DIR
 npm run build:all
+
+# Copy frontend dist to backend/dist (if not already done)
+if [ -d "$PROJECT_DIR/dist" ] && [ ! -f "$PROJECT_DIR/backend/dist/index.html" ]; then
+    print_info "Frontend dist-ის კოპირება backend/dist-ში..."
+    cp -r $PROJECT_DIR/dist/* $PROJECT_DIR/backend/dist/ 2>/dev/null || true
+fi
 print_success "Build დასრულებულია"
+
+# 10.1. Logs და Uploads დირექტორიები
+print_info "Logs და Uploads დირექტორიების შექმნა..."
+mkdir -p $PROJECT_DIR/logs
+mkdir -p $PROJECT_DIR/backend/uploads
+chmod 755 $PROJECT_DIR/backend/uploads
+print_success "დირექტორიები შექმნილია"
 
 # 11. PM2-ით გაშვება
 print_info "PM2-ით გაშვება..."
@@ -137,15 +150,35 @@ print_info "PM2 startup კონფიგურაცია..."
 pm2 startup | tail -1 | bash || true
 print_success "PM2 startup კონფიგურირებულია"
 
+# 13. Nginx კონფიგურაცია
+print_info "Nginx კონფიგურაცია..."
+if [ -f "$PROJECT_DIR/setup-nginx.sh" ]; then
+    chmod +x $PROJECT_DIR/setup-nginx.sh
+    sudo bash $PROJECT_DIR/setup-nginx.sh
+    print_success "Nginx კონფიგურირებულია"
+else
+    print_error "setup-nginx.sh ვერ მოიძებნა"
+fi
+
 echo ""
 echo "===================================="
 print_success "დეპლოიმენტი დასრულებულია!"
 echo "===================================="
 echo ""
 echo "შემდეგი ნაბიჯები:"
-echo "1. დაარედაქტირეთ $PROJECT_DIR/backend/.env ფაილი"
-echo "2. დაამატეთ DNS რეკორდები domenebi.ge-ზე"
-echo "3. დააყენეთ SSL: certbot --nginx -d creme.ge -d www.creme.ge"
-echo "4. შეამოწმეთ: pm2 status"
+echo "1. დაარედაქტირეთ $PROJECT_DIR/backend/.env ფაილი:"
+echo "   NODE_ENV=production"
+echo "   DOMAIN=creme.ge"
+echo "   FRONTEND_URL=https://creme.ge"
+echo ""
+echo "2. AWS Route 53-ზე DNS რეკორდები უკვე გაკეთებულია ✓"
+echo ""
+echo "3. SSL სერტიფიკატის დაყენება:"
+echo "   sudo certbot --nginx -d creme.ge -d www.creme.ge"
+echo ""
+echo "4. შემოწმება:"
+echo "   pm2 status"
+echo "   pm2 logs creme-backend"
+echo "   curl http://localhost:3000/api/health"
 echo ""
 
