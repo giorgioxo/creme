@@ -71,10 +71,16 @@ if (NODE_ENV === 'production') {
   // Try multiple possible paths for dist folder
   const fs = require('fs');
   const possiblePaths = [
-    path.join(__dirname, '../../dist'),           // Root dist
-    path.join(__dirname, '../dist'),              // Backend/dist
-    path.join(__dirname, '../../creme/dist'),      // Alternative structure
-    path.join(process.cwd(), 'dist')              // Current working directory
+    // Common Angular output layouts (new builder puts assets in dist/browser)
+    path.join(__dirname, '../../dist/browser'),
+    path.join(__dirname, '../dist/browser'),
+    path.join(process.cwd(), 'dist/browser'),
+    // Legacy/flat dist layouts
+    path.join(__dirname, '../../dist'),
+    path.join(__dirname, '../dist'),
+    path.join(process.cwd(), 'dist'),
+    path.join(__dirname, '../../creme/dist/browser'),
+    path.join(__dirname, '../../creme/dist'),
   ];
   
   let distPath = null;

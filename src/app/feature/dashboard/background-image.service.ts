@@ -12,7 +12,13 @@ export interface BackgroundImageResponse {
   providedIn: 'root'
 })
 export class BackgroundImageService {
-  private apiUrl = 'http://localhost:3000/api';
+  private readonly apiUrl = (() => {
+    const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const fallback = isLocalhost
+      ? 'http://localhost:3000/api'
+      : `${window.location.origin}/api`;
+    return (window as any).__API_URL__ || fallback;
+  })();
 
   constructor(private http: HttpClient) {}
 

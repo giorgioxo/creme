@@ -10,8 +10,13 @@ export interface ComingSoonResponse {
   providedIn: 'root'
 })
 export class ContentService {
-  // Use environment variable or default to localhost for development
-  private apiUrl = (window as any).__API_URL__ || 'http://localhost:3000/api';
+  private readonly apiUrl = (() => {
+    const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const fallback = isLocalhost
+      ? 'http://localhost:3000/api'
+      : `${window.location.origin}/api`;
+    return (window as any).__API_URL__ || fallback;
+  })();
 
   constructor(private http: HttpClient) {}
 
