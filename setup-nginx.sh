@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Nginx კონფიგურაციის სკრიპტი
+# Nginx Configuration Script
 
 DOMAIN="creme.ge"
 NGINX_CONFIG="/etc/nginx/sites-available/$DOMAIN"
 
 echo "===================================="
-echo "  Nginx კონფიგურაცია"
+echo "  Nginx Configuration"
 echo "===================================="
 echo ""
 
-# Nginx კონფიგურაციის შექმნა
+# Create Nginx configuration
 cat > $NGINX_CONFIG <<EOF
 server {
     listen 80;
@@ -54,28 +54,28 @@ server {
 }
 EOF
 
-echo "✓ Nginx კონფიგურაცია შექმნილია: $NGINX_CONFIG"
+echo "✓ Nginx configuration created: $NGINX_CONFIG"
 
-# საიტის აქტივაცია
+# Enable site
 ln -sf $NGINX_CONFIG /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 
-# კონფიგურაციის ტესტი
+# Test configuration
 if nginx -t; then
-    echo "✓ Nginx კონფიგურაცია სწორია"
+    echo "✓ Nginx configuration is valid"
     systemctl reload nginx
-    echo "✓ Nginx გადატვირთულია"
+    echo "✓ Nginx reloaded"
 else
-    echo "✗ Nginx კონფიგურაციაში შეცდომაა!"
+    echo "✗ Nginx configuration error!"
     exit 1
 fi
 
 echo ""
 echo "===================================="
-echo "  Nginx კონფიგურაცია დასრულებულია!"
+echo "  Nginx Configuration Complete!"
 echo "===================================="
 echo ""
-echo "შემდეგი ნაბიჯი:"
+echo "Next step:"
 echo "certbot --nginx -d $DOMAIN -d www.$DOMAIN"
 echo ""
 
